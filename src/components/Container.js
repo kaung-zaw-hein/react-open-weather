@@ -21,9 +21,9 @@ const Container = () => {
         try {
         setHttpError(false);
         setloading(true);
-          let url = `http://api.openweathermap.org/data/2.5/weather?q=${searchTerm}&units=metric&appid=4629514969e5416648023e360603cbec`;
+          let url = `https://api.openweathermap.org/data/2.5/weather?q=${searchTerm}&units=metric&appid=4629514969e5416648023e360603cbec`;
     
-          let res = await fetch(url);
+          let res = await fetch(url,{mode: 'cors'});
           let data = await res.json();
           const { temp, humidity, pressure } = data.main;
           const { main: weatherType } = data.weather[0];
