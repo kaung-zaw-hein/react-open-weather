@@ -10,7 +10,7 @@ const Container = () => {
     const [searchTerm, setSearchTerm] = useState("lanmadaw");
     const [tempInfo, setTempInfo] = useState({});
     const [loading, setloading]  = useState(true);
-    const [httpError, setHttpError] = useState();
+    const [httpError, setHttpError] = useState(false);
 
 
     const SearchCityweather = (entername) => {
@@ -19,6 +19,7 @@ const Container = () => {
 
     const getWeatherInfo = async () => {
         try {
+        setHttpError(false);
         setloading(true);
           let url = `http://api.openweathermap.org/data/2.5/weather?q=${searchTerm}&units=metric&appid=4629514969e5416648023e360603cbec`;
     
@@ -44,7 +45,7 @@ const Container = () => {
           setTempInfo(myNewWeatherInfo);
           setloading(false);
         } catch (error) {
-            setHttpError("Your searched city name is not exist");
+          setHttpError(true);
           setloading(false);
         }
       };
@@ -64,30 +65,23 @@ const Container = () => {
         );
       }
   
-      if (httpError) {
-        return (
-          <div className="menu">
-            <div className="loadingnerror">
-              <h1>{httpError}</h1>
-            </div>
-          </div>
-          
-        );
-      }
-
-
     return(
         <div className={classes.container} style={{ backgroundImage: `url(${ tempInfo.temp < 16 ? cold : hot})` }}>
             <div className={classes.blur}>
                 <Input entername={SearchCityweather}/>
-                <WeatherState temp = {tempInfo.temp}
+                {httpError && <div className="menu">
+            <div className="loadingnerror">
+              <h1>Your searched city name does not exist</h1>
+            </div>
+          </div>}
+            {!httpError &&     <WeatherState temp = {tempInfo.temp}
                             humidity = {tempInfo.humidity}
                             pressure = {tempInfo.pressure} 
                             weatherType = {tempInfo.weatherType}
                             name = {tempInfo.name}
                             speed = {tempInfo.speed}
                             country = {tempInfo.country}
-                            sunset = {tempInfo.sunset} />
+                            sunset = {tempInfo.sunset} />}
             </div>
         </div>
     )
