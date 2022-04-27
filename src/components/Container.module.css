@@ -11,7 +11,7 @@
 }
 .blur{
     width:90%;
-    height:90%;
+    height:80%;
     background:rgba(0, 0, 0, 0.3);
     border-radius: 10px;
     display: flex;

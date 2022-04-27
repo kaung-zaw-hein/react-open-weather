@@ -7,6 +7,7 @@ const Input = React.forwardRef((props, ref)=> {
     const Submitehandler = (event)=> {
         event.preventDefault();
         props.entername(searchcity.current.value);
+        searchcity.current.value = "";
     }
 
     return (
